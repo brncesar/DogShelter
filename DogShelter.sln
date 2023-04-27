@@ -3,7 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DogShelter.Domain", "src\DogShelter.Domain\DogShelter.Domain.csproj", "{B6C953E4-4FAE-4838-9D30-AAB29B0D8DF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DogShelter.Domain", "src\DogShelter.Domain\DogShelter.Domain.csproj", "{B6C953E4-4FAE-4838-9D30-AAB29B0D8DF1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DogShelter.Domain.Test", "src\DogShelter.Domain.Test\DogShelter.Domain.Test.csproj", "{A8C9EB1F-9BF6-4003-B318-2319CC9FB236}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DogShelter.Infrastructure.FakeInMemory", "src\DogShelter.Infrastructure.FakeInMemory\DogShelter.Infrastructure.FakeInMemory.csproj", "{020DE9B9-4D00-4481-8E81-A43B628D15ED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DogShelter.Infrastructure", "src\DogShelter.Infrastructure\DogShelter.Infrastructure.csproj", "{3432B378-3E97-4BEC-BFB7-BF35C05E104A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqliteDb", "SqliteDb", "{3A9BE263-A536-48D7-BB40-E44DA9339C16}"
+	ProjectSection(SolutionItems) = preProject
+		src\_SqliteDb\dog-shelter.db = src\_SqliteDb\dog-shelter.db
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DogShelter.Api", "src\DogShelter.Api\DogShelter.Api.csproj", "{CA855D37-D05D-40E0-A30F-2EC79415317F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Requests", "Requests", "{214A733F-D7DD-4081-A88B-577C9CDFB8EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Breed", "Breed", "{59A1C389-756F-4EB0-809B-C3A7213889D9}"
+	ProjectSection(SolutionItems) = preProject
+		src\_Requests\Breed\Search.http = src\_Requests\Breed\Search.http
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +35,28 @@ Global
 		{B6C953E4-4FAE-4838-9D30-AAB29B0D8DF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6C953E4-4FAE-4838-9D30-AAB29B0D8DF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6C953E4-4FAE-4838-9D30-AAB29B0D8DF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8C9EB1F-9BF6-4003-B318-2319CC9FB236}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8C9EB1F-9BF6-4003-B318-2319CC9FB236}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8C9EB1F-9BF6-4003-B318-2319CC9FB236}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8C9EB1F-9BF6-4003-B318-2319CC9FB236}.Release|Any CPU.Build.0 = Release|Any CPU
+		{020DE9B9-4D00-4481-8E81-A43B628D15ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{020DE9B9-4D00-4481-8E81-A43B628D15ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{020DE9B9-4D00-4481-8E81-A43B628D15ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{020DE9B9-4D00-4481-8E81-A43B628D15ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3432B378-3E97-4BEC-BFB7-BF35C05E104A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3432B378-3E97-4BEC-BFB7-BF35C05E104A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3432B378-3E97-4BEC-BFB7-BF35C05E104A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3432B378-3E97-4BEC-BFB7-BF35C05E104A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA855D37-D05D-40E0-A30F-2EC79415317F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA855D37-D05D-40E0-A30F-2EC79415317F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA855D37-D05D-40E0-A30F-2EC79415317F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA855D37-D05D-40E0-A30F-2EC79415317F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{59A1C389-756F-4EB0-809B-C3A7213889D9} = {214A733F-D7DD-4081-A88B-577C9CDFB8EF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {88989ED5-22D5-4F42-B9AB-5E7E60C88E22}

@@ -1,0 +1,124 @@
+@hostname = localhost
+@port = 7257
+@host = https://{{hostname}}:{{port}}
+@contentType = application/json
+
+
+### 👇 YOUR NEW USE CASE - REGULAR USE TEST SCENARIO  👇 ##############################################################
+### Search #############################################################################################################
+
+### Regular use --------------------------------------------------------------------------------------------------------
+POST {{host}}/api/Breed/Search
+Content-Type:{{contentType}}
+
+{
+    "id": "some valid domain value",
+    "apiId": "some valid domain value",
+    "name": "some valid domain value",
+    "bredFor": "some valid domain value",
+    "breedGroup": "some valid domain value",
+    "lifeSpan": "some valid domain value",
+    "temperament": "some valid domain value",
+    "weight": "some valid domain value",
+    "height": "some valid domain value"
+}
+
+
+
+
+### 👇 FIND EXEMPLE - ALL TESTS SCENARIOS 👇 ##########################################################################
+### (GET) FIND #########################################################################################################
+
+### Empty result -------------------------------------------------------------------------------------------------------
+GET {{host}}/api/Breed/Find?nome=feira+inexistente&regiao5=leste
+Content-Type: {{contentType}}
+
+### One result ---------------------------------------------------------------------------------------------------------
+GET {{host}}/api/Breed/Find?nome=AGUA+BRANCA
+Content-Type: {{contentType}}
+
+### Many results -------------------------------------------------------------------------------------------------------
+GET {{host}}/api/Breed/Find?nome=VILA&codDistrito=04
+Content-Type: {{contentType}}
+
+### Error parameter ----------------------------------------------------------------------------------------------------
+GET {{host}}/api/Breed/Find?nome=nome+muito+muuuito+muito+grande&regiao5=sudoeste
+
+
+
+
+### 👇 ADD  EXEMPLE - ALL TESTS SCENARIOS 👇 ##########################################################################
+### (POST) ADD New Breed ###############################################################################################
+
+### New Breed ----------------------------------------------------------------------------------------------------------
+POST {{host}}/api/Breed/Add
+Content-Type: {{contentType}}
+
+{
+    "nome"                 : "Nova Feira Teste",
+    "numeroRegistro"       : "9999-1",
+    "setorCensitarioIBGE"  : "355030801000054",
+    "areaDePonderacaoIBGE" : "3550308005039",
+    "codDistrito"          : "01",
+    "codSubPrefeitura"     : "25",
+    "regiao5"              : "LESTE",
+    "regiao8"              : "leste1",
+    "enderecoLogradouro"   : "Avenida Clark Kent",
+    "enderecoNumero"       : "5",
+    "enderecoBairro"       : "Metrópolis",
+    "enderecoReferencia"   : "Ao lado do Clarim Diário",
+    "latitude"             : -23.564711,
+    "longitude"            : -46.564711
+}
+
+### Find new Breed added -----------------------------------------------------------------------------------------------
+GET {{host}}/api/Breed/Find?nome=Nova+Feira+Teste
+Content-Type: {{contentType}}
+
+### Edit new Breed added -----------------------------------------------------------------------------------------------
+PUT {{host}}/api/Breed/Edit
+Content-Type: {{contentType}}
+
+{
+    "nome"                 : "Feira dos Kent",
+    "numeroRegistro"       : "9999-1",
+    "regiao5"              : "oeste",
+    "regiao8"              : "oeste"
+}
+
+### Find agin new Breed added (and edited) -----------------------------------------------------------------------------
+GET {{host}}/api/Breed/Find?nome=Feira+dos+Kent
+
+### Remove new Breed edited --------------------------------------------------------------------------------------------
+DELETE {{host}}/api/Breed/Remove/9999-1
+
+### Error parameter ----------------------------------------------------------------------------------------------------
+POST {{host}}/api/Breed/Add
+Content-Type: {{contentType}}
+
+{
+    "nome"                 : "Nova Feira Teste",
+    "numeroRegistro"       : "9999-1",
+    "setorCensitarioIBGE"  : "355030801000054",
+    "areaDePonderacaoIBGE" : "3550308005039",
+    "codDistrito"          : "01",
+    "codSubPrefeitura"     : "25",
+    "regiao5"              : "Sudoeste",
+    "regiao8"              : "Noroeste",
+    "enderecoLogradouro"   : "Avenida Clark Kent",
+    "enderecoNumero"       : "123456",
+    "enderecoBairro"       : "Metrópolis",
+    "enderecoReferencia"   : "Ao lado do Clarim Diário",
+    "latitude"             : -23564711,
+    "longitude"            : -46.564711
+}
+
+### Error: Try edit without numeroRegistro -----------------------------------------------------------------------------
+PUT {{host}}/api/Breed/Edit
+Content-Type: {{contentType}}
+
+{
+    "nome"    : "Feira dos Kent",
+    "regiao5" : "oeste",
+    "regiao8" : "oeste"
+}

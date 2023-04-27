@@ -17,7 +17,7 @@ public interface IBaseEntityRepositoryUpdate<TEntity>
 
 public interface IBaseEntityRepositoryDelete<TEntity>
 {
-    Task<IDomainActionResult<bool>> DeleteAsync(Guid id);
+    Task<IDomainActionResult<bool>> DeleteByIdAsync(Guid id);
 }
 
 public interface IBaseEntityRepositoryGetAll<TEntity>

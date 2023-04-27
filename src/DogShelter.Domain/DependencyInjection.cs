@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using DogShelter.Domain.Entities.BreedEntity.SearchUseCase;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DogShelter.Domain;
 
@@ -7,6 +8,6 @@ public static class DependencyInjection
     public static IServiceCollection AddDomain(this IServiceCollection services)
     {
         return services
-            .AddScoped<FindDistrito>();
+            .AddScoped<Search>(); // Breed(entity) » Search(use case)
     }
 }

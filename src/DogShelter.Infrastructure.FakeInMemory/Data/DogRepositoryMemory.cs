@@ -2,6 +2,7 @@ using DogShelter.Domain.Entities.Common;
 using DogShelter.Domain.Entities.BreedEntity;
 using DogShelter.Domain.Entities.DogEntity;
 using DogShelter.Domain.Entities.DogEntity.AddDogUseCase;
+using DogShelter.Domain.Entities.DogEntity.Common;
 using DogShelter.Domain.Misc;
 
 namespace DogShelter.Infrastructure.FakeInMemory.Data;
@@ -76,9 +77,9 @@ public class DogRepositoryMemory : IDogRepository
     public DogRepositoryMemory(IBreedRepository breedRepository)
         => _breedRepository = breedRepository;
 
-    public async Task<IDomainActionResult<AddDogResult>> AddDogAsync(AddDogParams addDogParams)
+    public async Task<IDomainActionResult<FlatDogResult>> AddDogAsync(AddDogParams addDogParams)
     {
-        var domainRepositoryResult = new DomainActionResult<AddDogResult>();
+        var domainRepositoryResult = new DomainActionResult<FlatDogResult>();
 
         var getBreedByIdResult = await _breedRepository.GetByExternalId(addDogParams.BreedId);
 
@@ -95,7 +96,7 @@ public class DogRepositoryMemory : IDogRepository
 
         ListDogMock.Add(newDog);
 
-        var result = new AddDogResult(
+        var result = new FlatDogResult(
             newDog.Id,
             newDog.Name,
             newDog.Breed.Name,
@@ -106,22 +107,7 @@ public class DogRepositoryMemory : IDogRepository
             newDog.Breed.HeightAverageMetric,
             newDog.Breed.HeightAverageImperial);
 
-        return new DomainActionResult<AddDogResult>(result);
-    }
-
-    public async Task<IDomainActionResult<AddDogResult>> GetDogsByHeightBetween(int minimumHeight, int maximumHeight)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<IDomainActionResult<AddDogResult>> GetDogsByHeightHigherThen(int minimumHeight)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<IDomainActionResult<AddDogResult>> GetDogsByHeightLowerThen(int maximumHeight)
-    {
-        throw new NotImplementedException();
+        return new DomainActionResult<FlatDogResult>(result);
     }
 
     public async Task<IDomainActionResult<Dog>> GetDogByName(string name)
@@ -134,4 +120,57 @@ public class DogRepositoryMemory : IDogRepository
             ? domainRepositoryResult.SetValue(dog)
             : domainRepositoryResult.AddNotFoundError("", "");
     }
+
+    public async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightBetween(bool isMeasurementSystemMetric, int minimumHeight, int maximumHeight)
+        => await GetDogsByHeight(isMeasurementSystemMetric: isMeasurementSystemMetric, min: minimumHeight, max: maximumHeight);
+
+    public async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightHigherThen(bool isMeasurementSystemMetric, int minimumHeight)
+        => await GetDogsByHeight(isMeasurementSystemMetric: isMeasurementSystemMetric, min: minimumHeight);
+
+    public async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightLowerThen(bool isMeasurementSystemMetric, int maximumHeight)
+        => await GetDogsByHeight(isMeasurementSystemMetric: isMeasurementSystemMetric, max: maximumHeight);
+
+    private async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeight(bool isMeasurementSystemMetric = true, int? min = null, int? max = null)
+    {
+        var domainRepositoryResult = new DomainActionResult<List<FlatDogResult>>();
+
+        var heightLimits = new { Min = min, Max = max };
+
+        Func<Dog, bool> filter = heightLimits switch
+        {
+            { Min: int _min, Max: int _max } => isMeasurementSystemMetric
+                ? d => d.Breed.HeightAverageMetric   >= min && d.Breed.HeightAverageMetric   <= max
+                : d => d.Breed.HeightAverageImperial >= min && d.Breed.HeightAverageImperial <= max,
+
+            { Min: int _min, Max: null    } => isMeasurementSystemMetric
+                ? d => d.Breed.HeightAverageMetric   >= min
+                : d => d.Breed.HeightAverageImperial >= min,
+
+            { Min: null, Max: int _max    } => isMeasurementSystemMetric
+                ? d => d.Breed.HeightAverageMetric   <= max
+                : d => d.Breed.HeightAverageImperial <= max,
+
+            _ => throw new ArgumentException()
+        };
+
+        var foundedDogsOnRepository = ListDogMock.Where(filter);
+
+        var foundedDogsListResult = new List<FlatDogResult>();
+
+        foundedDogsOnRepository.ToList().ForEach(dog => foundedDogsListResult.Add(getFlatDogResultFromDogEntity(dog)));
+
+        return domainRepositoryResult.SetValue(foundedDogsListResult);
+    }
+
+    private FlatDogResult getFlatDogResultFromDogEntity(Dog dogEntity)
+        => new FlatDogResult(
+            dogEntity.Id,
+            dogEntity.Name,
+            dogEntity.Breed.Name,
+            dogEntity.Breed.BredFor,
+            dogEntity.Breed.BreedGroup,
+            dogEntity.Breed.LifeSpan,
+            dogEntity.Breed.Temperament,
+            dogEntity.Breed.HeightAverageMetric,
+            dogEntity.Breed.HeightAverageImperial);
 }

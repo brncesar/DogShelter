@@ -6,7 +6,7 @@ namespace DogShelter.Domain.Test.UseCases.DistritoEntity;
 public class AddDogUseCaseTest
 {
     private readonly AddDog _useCaseTestTarget;
-    private readonly AddDogParams _useCaseCommonParamObj = new AddDogParams(
+    private readonly AddDogParams _useCaseCommonParamObj = new (
         Name: "Vira lata",
         BreedId: 6);
 

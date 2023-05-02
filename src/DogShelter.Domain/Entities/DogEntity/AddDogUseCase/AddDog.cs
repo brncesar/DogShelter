@@ -1,5 +1,6 @@
 using DogShelter.Domain.Entities.BreedEntity;
 using DogShelter.Domain.Entities.Common;
+using DogShelter.Domain.Entities.DogEntity.Common;
 using DogShelter.Domain.Misc;
 
 namespace DogShelter.Domain.Entities.DogEntity.AddDogUseCase;
@@ -12,11 +13,11 @@ public class AddDog
     public AddDog(IDogRepository dogRepository, IBreedRepository breedRepository)
         => (_dogRepository, _breedRepository) = (dogRepository, breedRepository);
 
-    public async Task<IDomainActionResult<AddDogResult>> Execute(AddDogParams addDogParams)
+    public async Task<IDomainActionResult<FlatDogResult>> Execute(AddDogParams addDogParams)
     {
         var paramsValidationResult = new AddDogParamsValidator().Validate(addDogParams);
 
-        var addDogResult = new DomainActionResult<AddDogResult>(paramsValidationResult.Errors);
+        var addDogResult = new DomainActionResult<FlatDogResult>(paramsValidationResult.Errors);
 
         await IfTheNamePropertyIsValidCheckIfThereIsAlreadyARegisteredDogWithThisName(addDogResult, addDogParams.Name);
 
@@ -34,7 +35,7 @@ public class AddDog
             : addDogResult;
     }
 
-    private async Task IfTheNamePropertyIsValidCheckIfThereIsAlreadyARegisteredDogWithThisName(DomainActionResult<AddDogResult> domainActionResult, string dogName)
+    private async Task IfTheNamePropertyIsValidCheckIfThereIsAlreadyARegisteredDogWithThisName(DomainActionResult<FlatDogResult> domainActionResult, string dogName)
     {
         var dogPropertyNameLengthWithoutRange = DogCommonErrors.PropsErrors.NameLengthWithoutRange().Description;
         if (domainActionResult.Errors.None(err => err.Description == dogPropertyNameLengthWithoutRange))
@@ -51,7 +52,7 @@ public class AddDog
         return domainResultGetDogByName.IsSuccess() && domainResultGetDogByName.Value is not null;
     }
 
-    private async Task IFTheBreedIdPropertyIsValidCheckIfThereIsABreedAssociatedWithTheInformedId(DomainActionResult<AddDogResult> domainActionResult, int breedId)
+    private async Task IFTheBreedIdPropertyIsValidCheckIfThereIsABreedAssociatedWithTheInformedId(DomainActionResult<FlatDogResult> domainActionResult, int breedId)
     {
         var dogPropertyBreedIdLowerThan1 = DogCommonErrors.PropsErrors.BreedIdLowerThan1().Description;
         if (domainActionResult.Errors.None(err => err.Description == dogPropertyBreedIdLowerThan1))

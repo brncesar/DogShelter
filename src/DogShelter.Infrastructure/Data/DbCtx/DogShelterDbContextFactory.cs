@@ -14,7 +14,7 @@ public class DogShelterDbContextFactory : IDesignTimeDbContextFactory<DogShelter
 
     public DogShelterDbContext CreateDbContext(string[] args)
     {
-        string filePath = TryGetSolutionDirectoryInfo() + @"\DogShelter.Infrastructure\appsettings.json";
+        string filePath = TryGetSolutionDirectoryInfo() + @"\src\DogShelter.Infrastructure\appsettings.json";
 
         IConfiguration Configuration = new ConfigurationBuilder()
            .SetBasePath(Path.GetDirectoryName(filePath))

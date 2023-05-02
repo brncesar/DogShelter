@@ -1,23 +1,49 @@
-using DogShelter.Domain.Common;
 using DogShelter.Domain.Entities.Common;
 using DogShelter.Domain.Entities.BreedEntity;
-using DogShelter.Domain.Entities.BreedEntity.SearchUseCase;
 using DogShelter.Domain.Misc;
 using DogShelter.Infrastructure.Data.DbCtx;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 
 namespace DogShelter.Infrastructure.Data.Repository;
 
 public class BreedRepository : BaseRepository<DogShelterDbContext, Breed>, IBreedRepository
 {
-    public BreedRepository(DogShelterDbContext dbCtx) : base(dbCtx) { }/*
+    public BreedRepository(DogShelterDbContext dbCtx) : base(dbCtx) { }
 
-    public async Task<IDomainActionResult<SearchResult>> JUST_AN_EXAMPLE_GetByCodigoAsync(string codigo)
+    public async Task<IDomainActionResult<Breed>> GetByExternalId(int id)
     {
-        var domainRepositoryResult = new DomainActionResult<SearchResult>();
+        var domainRepositoryResult = new DomainActionResult<Breed>();
         try
         {
-            var breed = await _dbSet.FirstOrDefaultAsync(d => d.Cod == codigo.Trim());
+            var internalSavedBreed = await _dbSet.FirstOrDefaultAsync(d => d.ApiId == id);
+
+            if (internalSavedBreed is null) { // Must get breed from API
+                // Get breed from API
+                var breedFoundedOnDogApi = true;
+
+                if (breedFoundedOnDogApi) {
+                    var heightRangeMetric   = "23 - 50";
+                    var heightRangeImperial = "12 - 31";
+
+                    var newBreed = new Breed {
+                        ApiId                 = 0,
+                        Name                  = "",
+                        BredFor               = "",
+                        BreedGroup            = "",
+                        LifeSpan              = "",
+                        Temperament           = "",
+                        HeightAverageMetric   = GetAverageValueFromRange(heightRangeMetric  ),
+                        HeightAverageImperial = GetAverageValueFromRange(heightRangeImperial),
+                    };
+
+                    await base.AddAsync(newBreed);
+
+                    internalSavedBreed = newBreed;
+                }
+            }
+
+            var breed = internalSavedBreed;
 
             return breed is not null
                 ? domainRepositoryResult.SetValue(breed)
@@ -27,21 +53,20 @@ public class BreedRepository : BaseRepository<DogShelterDbContext, Breed>, IBree
         {
             return domainRepositoryResult.ReturnRepositoryError(ex);
         }
-    }*/
-    // 👆 Other methods pre-defined in the Breed repository file
-    // 👇 Your new method in the repository to match the use case
-    public async Task<IDomainActionResult<SearchResult>> SearchAsync(SearchParams searchParams)
-    {
-        var domainRepositoryResult = new DomainActionResult<SearchResult>();
-        try
-        {
-            // repository logic
+    }
 
-            return domainRepositoryResult;
-        }
-        catch (Exception ex)
-        {
-            return domainRepositoryResult.ReturnRepositoryError(ex);
-        }
+    private static int GetAverageValueFromRange(string range)
+    {
+        if (range is null) return 0;
+
+        var pattern = @"^\d+\s-\s\d+$";
+
+        if (!Regex.IsMatch(range, pattern)) return 0;
+
+        var rangeNumbers = range.Split(" - ");
+        var from = int.Parse(rangeNumbers[0]);
+        var to = int.Parse(rangeNumbers[1]);
+
+        return Convert.ToInt32((from + to) / 2);
     }
 }

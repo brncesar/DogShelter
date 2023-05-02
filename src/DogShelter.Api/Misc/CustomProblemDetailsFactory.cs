@@ -1,5 +1,4 @@
-﻿using DogShelter.Domain.Common;
-using DogShelter.Domain.Misc;
+﻿using DogShelter.Domain.Misc;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;

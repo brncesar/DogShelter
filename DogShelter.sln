@@ -20,9 +20,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DogShelter.Api", "src\DogSh
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Requests", "Requests", "{214A733F-D7DD-4081-A88B-577C9CDFB8EF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Breed", "Breed", "{59A1C389-756F-4EB0-809B-C3A7213889D9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dog", "Dog", "{FC5FD521-F27B-4D5D-BB89-1C94321DE5B2}"
 	ProjectSection(SolutionItems) = preProject
-		src\_Requests\Breed\Search.http = src\_Requests\Breed\Search.http
+		src\_Requests\Dog\AddDog.http = src\_Requests\Dog\AddDog.http
 	EndProjectSection
 EndProject
 Global
@@ -56,7 +56,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{59A1C389-756F-4EB0-809B-C3A7213889D9} = {214A733F-D7DD-4081-A88B-577C9CDFB8EF}
+		{FC5FD521-F27B-4D5D-BB89-1C94321DE5B2} = {214A733F-D7DD-4081-A88B-577C9CDFB8EF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {88989ED5-22D5-4F42-B9AB-5E7E60C88E22}

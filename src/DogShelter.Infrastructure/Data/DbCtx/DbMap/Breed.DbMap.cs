@@ -8,25 +8,16 @@ internal class BreedDbMap : IEntityTypeConfiguration<Breed>
 {
     public void Configure(EntityTypeBuilder<Breed> builder)
     {
-        builder.ToTable("T?##_Breed");
-        builder.HasKey  (p => p.Id);
-        builder.Property(p => p.Id).HasColumnName("T?##_id_Breed").HasColumnOrder(1);/*
-        builder.HasIndex(b => b.Cod).IsUnique(true);*/
-        builder.Property(p => p.Id).HasMaxLength(255).IsRequired().IsFixedLength().HasColumnType("char").HasComment("Lorem ipsum dollor");
-        builder.Property(p => p.ApiId).HasMaxLength(255).IsRequired().IsFixedLength().HasColumnType("char").HasComment("Lorem ipsum dollor");
-        builder.Property(p => p.Name).HasMaxLength(255).IsRequired().IsFixedLength().HasColumnType("char").HasComment("Lorem ipsum dollor");
-        builder.Property(p => p.BredFor).HasMaxLength(255).IsRequired().IsFixedLength().HasColumnType("char").HasComment("Lorem ipsum dollor");
-        builder.Property(p => p.BreedGroup).HasMaxLength(255).IsRequired().IsFixedLength().HasColumnType("char").HasComment("Lorem ipsum dollor");
-        builder.Property(p => p.LifeSpan).HasMaxLength(255).IsRequired().IsFixedLength().HasColumnType("char").HasComment("Lorem ipsum dollor");
-        builder.Property(p => p.Temperament).HasMaxLength(255).IsRequired().IsFixedLength().HasColumnType("char").HasComment("Lorem ipsum dollor");
-        builder.Property(p => p.Weight).HasMaxLength(255).IsRequired().IsFixedLength().HasColumnType("char").HasComment("Lorem ipsum dollor");
-        builder.Property(p => p.Height).HasMaxLength(255).IsRequired().IsFixedLength().HasColumnType("char").HasComment("Lorem ipsum dollor");
-
-        // Relationships
-        /*
-        builder
-            .HasOne       (thisEntity  => thisEntity .NavigationProperty)
-            .WithMany     (otherEntity => otherEntity.ListPropertyOfThisEntity)
-            .HasForeignKey(thisEntity  => thisEntity .IdFromNavigationProperty);*/
+        builder.ToTable("T02_Breed").HasKey(p => p.Id);
+        builder.Property(p => p.Id                   ).HasColumnName("T02_id_Breed").HasColumnOrder(1);
+        builder.HasIndex(b => b.ApiId                ).IsUnique(true);
+        builder.Property(p => p.ApiId                ).HasColumnName("id_BreedIdOnDogApi"      );
+        builder.Property(p => p.Name                 ).HasColumnName("na_Breed"                ).HasMaxLength(255).IsRequired();
+        builder.Property(p => p.BredFor              ).HasColumnName("tx_BredFor"              ).HasMaxLength(255).IsRequired();
+        builder.Property(p => p.BreedGroup           ).HasColumnName("tx_BredGroup"            ).HasMaxLength(255).IsRequired();
+        builder.Property(p => p.LifeSpan             ).HasColumnName("tx_LifeSpan"             ).HasMaxLength(255).IsRequired();
+        builder.Property(p => p.Temperament          ).HasColumnName("tx_Temperament"          ).HasMaxLength(255).IsRequired();
+        builder.Property(p => p.HeightAverageMetric  ).HasColumnName("nu_HeightAverageMetric"  );
+        builder.Property(p => p.HeightAverageImperial).HasColumnName("nu_HeightAverageImperial");
     }
 }

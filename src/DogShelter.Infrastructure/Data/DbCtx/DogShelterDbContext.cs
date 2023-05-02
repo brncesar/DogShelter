@@ -1,4 +1,5 @@
 ﻿using DogShelter.Domain.Entities.BreedEntity;
+using DogShelter.Domain.Entities.DogEntity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DogShelter.Infrastructure.Data.DbCtx;
@@ -8,6 +9,7 @@ public class DogShelterDbContext : DbContext
     public DogShelterDbContext(DbContextOptions<DogShelterDbContext> options) : base(options) { }
 
     public DbSet<Breed> Breed { get; set; } = null!;
+    public DbSet<Dog  > Dog   { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -23,6 +25,7 @@ public class DogShelterDbContext : DbContext
         modelBuilder
             .RemovePluralizeConvention()
             .RemoveOneToManyCascadeConvention()
+            .SetStringTypeToVarchar100AsDefault()
             .ApplyEntitiesTypeConfigurations<DogShelterDbContext>(); // DbMaps
 
         base.OnModelCreating(modelBuilder);

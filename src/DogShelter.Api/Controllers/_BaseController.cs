@@ -1,6 +1,6 @@
 ﻿using DogShelter.Api.Misc;
-using DogShelter.Domain.Common;
 using DogShelter.Domain.Entities.Common;
+using DogShelter.Domain.Misc;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DogShelter.Api.Controllers

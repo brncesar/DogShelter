@@ -1,5 +1,4 @@
-﻿using DogShelter.Domain.Common;
-using DogShelter.Domain.Entities.Common;
+﻿using DogShelter.Domain.Entities.Common;
 using Microsoft.EntityFrameworkCore;
 using DogShelter.Domain.Misc;
 using DogShelter.Infrastructure.Data.DbCtx;

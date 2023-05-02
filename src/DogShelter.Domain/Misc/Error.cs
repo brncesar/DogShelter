@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace DogShelter.Domain.Common;
+namespace DogShelter.Domain.Misc;
 
 
 // This class Error is copy of Error from ErrorOr project (https://github.com/amantinband/error-or)

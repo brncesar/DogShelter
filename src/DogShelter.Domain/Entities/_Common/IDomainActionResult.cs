@@ -1,5 +1,4 @@
-﻿using DogShelter.Domain.Common;
-using DogShelter.Domain.Misc;
+﻿using DogShelter.Domain.Misc;
 
 namespace DogShelter.Domain.Entities.Common;
 
@@ -12,8 +11,8 @@ public interface IDomainActionResult<TResult>
 public static class IDomainActionResultExtensionMethods
 {
     public static bool IsSuccess<T>(this IDomainActionResult<T> domainActionResult)
-        => domainActionResult.Errors.None() && !EqualityComparer<T>.Default.Equals(domainActionResult.Value, default(T));
+        => domainActionResult.Errors.None();
 
     public static bool HasErrors<T>(this IDomainActionResult<T> domainActionResult)
-        => !domainActionResult.IsSuccess();
+        => domainActionResult.Errors.Any();
 }

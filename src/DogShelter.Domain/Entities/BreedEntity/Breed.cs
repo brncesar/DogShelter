@@ -1,16 +1,18 @@
 using DogShelter.Domain.Entities.Common;
+using DogShelter.Domain.Entities.DogEntity;
 
 namespace DogShelter.Domain.Entities.BreedEntity;
 
 public class Breed : BaseEntity
 {
-    public Guid Id { get; set; }
-    public int ApiId { get; set; }
-    public string Name { get; set; }
-    public string BredFor { get; set; }
-    public string BreedGroup { get; set; }
-    public string LifeSpan { get; set; }
-    public string Temperament { get; set; }
-    public string Weight { get; set; }
-    public string Height { get; set; }
+    public int    ApiId                 { get; set; }
+    public string Name                  { get; set; } = null!;
+    public string BredFor               { get; set; } = null!;
+    public string BreedGroup            { get; set; } = null!;
+    public string LifeSpan              { get; set; } = null!;
+    public string Temperament           { get; set; } = null!;
+    public int    HeightAverageMetric   { get; set; }
+    public int    HeightAverageImperial { get; set; }
+
+    public List<Dog> Dogs { get; set; }
 }

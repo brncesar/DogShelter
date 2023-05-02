@@ -1,8 +1,7 @@
 ﻿using DogShelter.Domain.Entities.Common;
-using DogShelter.Domain.Misc;
 using FluentValidation.Results;
 
-namespace DogShelter.Domain.Common;
+namespace DogShelter.Domain.Misc;
 
 public class DomainActionResult<T> : IDomainActionResult<T>
 {

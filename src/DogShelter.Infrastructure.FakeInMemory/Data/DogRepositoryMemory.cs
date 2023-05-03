@@ -4,9 +4,8 @@ using DogShelter.Domain.Entities.DogEntity;
 using DogShelter.Domain.Entities.DogEntity.AddDogUseCase;
 using DogShelter.Domain.Entities.DogEntity.Common;
 using DogShelter.Domain.Misc;
-using System.Linq.Expressions;
 using DogShelter.Domain.Entities.DogEntity.GetDogsByBreedUseCase;
-using System.Xml.Linq;
+using DogShelter.Domain.Entities.DogEntity.GetDogsByTemperamentUseCase;
 
 namespace DogShelter.Infrastructure.FakeInMemory.Data;
 
@@ -133,6 +132,24 @@ public class DogRepositoryMemory : IDogRepository
         var foundedDogsListResult = new List<FlatDogResult>();
 
         foundedDogsOnRepository.ToList().ForEach(dog => foundedDogsListResult.Add(getFlatDogResultFromDogEntity(dog)));
+
+        return domainRepositoryResult.SetValue(foundedDogsListResult);
+    }
+
+    public async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByTemperamentAsync(List<string> temperaments)
+    {
+        var domainRepositoryResult = new DomainActionResult<List<FlatDogResult>>();
+
+        var filteredDogsByTemperament = new List<Dog>();
+
+        ListDogMock.ForEach(dog => {
+            if (temperaments.Any(temp => dog.Breed.Temperament.Contains(temp)))
+                filteredDogsByTemperament.Add(dog);
+        });
+
+        var foundedDogsListResult = new List<FlatDogResult>();
+
+        filteredDogsByTemperament.Distinct().ToList().ForEach(dog => foundedDogsListResult.Add(getFlatDogResultFromDogEntity(dog)));
 
         return domainRepositoryResult.SetValue(foundedDogsListResult);
     }

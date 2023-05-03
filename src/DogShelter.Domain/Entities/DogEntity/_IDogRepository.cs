@@ -18,4 +18,6 @@ public interface IDogRepository
     Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightBetweenAsync(int minimumHeight, int maximumHeight);
 
     Task<IDomainActionResult<List<FlatDogResult>>> GetDogsbyBreedAsync(GetDogsByBreedParams getDogsbyBreedParams);
+
+    Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByTemperamentAsync(List<string> temperaments);
 }

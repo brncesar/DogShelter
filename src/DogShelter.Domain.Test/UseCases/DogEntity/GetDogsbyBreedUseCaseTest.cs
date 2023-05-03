@@ -1,5 +1,4 @@
-﻿using DogShelter.Domain.Entities.DogEntity.AddDogUseCase;
-using DogShelter.Domain.Entities.DogEntity.GetDogsByBreedUseCase;
+﻿using DogShelter.Domain.Entities.DogEntity.GetDogsByBreedUseCase;
 
 namespace DogShelter.Domain.Test.UseCases.DistritoEntity;
 
@@ -20,7 +19,7 @@ public class GetDogsbyBreedUseCaseTest
     [InlineData(3000)]
     [InlineData(4000)]
     // The mock repository returns NotFound if the breedId is greater than 1000.
-    public async Task MustReturnErrorWhenBreedDoesntExist(int breedId)
+    public async Task MustReturnEmptyResultWhenBreedDoesntExist(int breedId)
     {
         var useCaseParamObj = _useCaseCommonParamObj with
         {
@@ -29,8 +28,6 @@ public class GetDogsbyBreedUseCaseTest
 
         var getDogsbyBreedResult = await _useCaseTestTarget.Execute(useCaseParamObj);
 
-        var hasErrorBreedNotFound = getDogsbyBreedResult.Errors.Any(err => err.Description == AddDogErrors.BreedNotFound().Description);
-
-        Assert.True(hasErrorBreedNotFound);
+        Assert.True(!getDogsbyBreedResult?.Value?.Any() ?? false);
     }
 }

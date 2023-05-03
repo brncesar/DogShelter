@@ -1,0 +1,32 @@
+@hostname = localhost
+@port = 7111
+@host = https://{{hostname}}:{{port}}
+@contentType = application/json
+
+
+### GetDogsByTemperament ##############################################################################################
+
+### Friendly ---------------------------------------------------------------------------------------------------------
+GET {{host}}/api/Dog/GetDogsByTemperament?temperament=Friendly
+Content-Type:{{contentType}}
+
+### Lively -----------------------------------------------------------------------------------------------------------
+GET {{host}}/api/Dog/GetDogsByTemperament?temperament=Lively
+Content-Type:{{contentType}}
+
+### Gentle -----------------------------------------------------------------------------------------------------------
+GET {{host}}/api/Dog/GetDogsByTemperament?temperament=Gentle
+Content-Type:{{contentType}}
+
+### Friendly and Lively ----------------------------------------------------------------------------------------------
+GET {{host}}/api/Dog/GetDogsByTemperament?temperament=Lively,+Friendly
+Content-Type:{{contentType}}
+
+### Error parameter: minimum length ----------------------------------------------------------------------------------
+GET {{host}}/api/Dog/GetDogsByTemperament?temperament=e
+
+### Error parameter: maximum length ----------------------------------------------------------------------------------
+GET {{host}}/api/Dog/GetDogsByTemperament?temperament=eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+
+### Error missing parameter -------------------------------------------------------------------------------------------
+GET {{host}}/api/Dog/GetDogsByTemperament

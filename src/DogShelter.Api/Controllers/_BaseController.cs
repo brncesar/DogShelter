@@ -24,10 +24,10 @@ namespace DogShelter.Api.Controllers
 
             var qtdErros = domainActionResultWithError.Errors.Count;
             if (qtdErros > 1)
-                title = $"{title} Além de mais {qtdErros - 1} " +
-                    $"erro{(qtdErros == 2 ? "" : "s")} " +
-                    $"encontrado{(qtdErros == 2 ? "" : "s")}. " +
-                    $"Verifique 'errorCodes' para mais detalhes.";
+                title = $"{title} Plus more {qtdErros - 1} " +
+                    $"error{(qtdErros == 2 ? "" : "s")} " +
+                    $"found. " +
+                    $"Look 'errorCodes' to more details.";
 
             var statusCode = firstError.Type switch
             {

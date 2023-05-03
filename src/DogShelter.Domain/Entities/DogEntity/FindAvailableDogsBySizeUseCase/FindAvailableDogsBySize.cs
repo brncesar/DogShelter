@@ -24,9 +24,9 @@ public class FindAvailableDogsBySize
 
         var findAvailableDogsBySizeRespositoryResult = char.ToLower(findAvailableDogsBySizeParams.Size) switch
         {
-            's' => await _dogRepository.GetDogsByHeightLowerThen (SMALL_MAX_SIZE_IN_CENTIMETERS),
-            'l' => await _dogRepository.GetDogsByHeightHigherThen(LARGE_MIN_SIZE_IN_CENTIMETERS),
-            'm' => await _dogRepository.GetDogsByHeightBetween   (SMALL_MAX_SIZE_IN_CENTIMETERS, LARGE_MIN_SIZE_IN_CENTIMETERS),
+            's' => await _dogRepository.GetDogsByHeightLowerThenAsync (SMALL_MAX_SIZE_IN_CENTIMETERS),
+            'l' => await _dogRepository.GetDogsByHeightHigherThenAsync(LARGE_MIN_SIZE_IN_CENTIMETERS),
+            'm' => await _dogRepository.GetDogsByHeightBetweenAsync   (SMALL_MAX_SIZE_IN_CENTIMETERS, LARGE_MIN_SIZE_IN_CENTIMETERS),
         };
 
         if (findAvailableDogsBySizeRespositoryResult.HasErrors())

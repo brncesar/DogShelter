@@ -7,6 +7,7 @@ using DogShelter.Domain.Misc;
 using DogShelter.Infrastructure.Data.DbCtx;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using DogShelter.Domain.Entities.DogEntity.GetDogsByBreedUseCase;
 
 namespace DogShelter.Infrastructure.Data.Repository;
 
@@ -45,7 +46,7 @@ public class DogRepository : BaseRepository<DogShelterDbContext, Dog>, IDogRepos
         }
     }
 
-    public async Task<IDomainActionResult<Dog>> GetDogByName(string name)
+    public async Task<IDomainActionResult<Dog>> GetDogByNameAsync(string name)
     {
         var domainRepositoryResult = new DomainActionResult<Dog>();
         try
@@ -62,16 +63,35 @@ public class DogRepository : BaseRepository<DogShelterDbContext, Dog>, IDogRepos
         }
     }
 
-    public async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightBetween(int minimumHeight, int maximumHeight)
-        => await GetDogsByHeight(min: minimumHeight, max: maximumHeight);
+    public async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsbyBreedAsync(GetDogsByBreedParams getDogsbyBreedParams)
+    {
+        var domainRepositoryResult = new DomainActionResult<List<FlatDogResult>>();
+        try
+        {
+            var foundedDogsOnRepository = _dbSet.Where(dog => dog.Breed.ApiId == getDogsbyBreedParams.BreedId).Include(dog => dog.Breed);
 
-    public async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightHigherThen(int minimumHeight)
-        => await GetDogsByHeight(min: minimumHeight);
+            var foundedDogsListResult = new List<FlatDogResult>();
 
-    public async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightLowerThen(int maximumHeight)
-        => await GetDogsByHeight(max: maximumHeight);
+            foundedDogsOnRepository.ToList().ForEach(dog => foundedDogsListResult.Add(getFlatDogResultFromDogEntity(dog)));
 
-    private async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeight(int ? min = null, int? max = null)
+            return domainRepositoryResult.SetValue(foundedDogsListResult);
+        }
+        catch (Exception ex)
+        {
+            return domainRepositoryResult.ReturnRepositoryError(ex);
+        }
+    }
+
+    public async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightBetweenAsync(int minimumHeight, int maximumHeight)
+        => await GetDogsByHeightAsync(min: minimumHeight, max: maximumHeight);
+
+    public async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightHigherThenAsync(int minimumHeight)
+        => await GetDogsByHeightAsync(min: minimumHeight);
+
+    public async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightLowerThenAsync(int maximumHeight)
+        => await GetDogsByHeightAsync(max: maximumHeight);
+
+    private async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightAsync(int ? min = null, int? max = null)
     {
         var domainRepositoryResult = new DomainActionResult<List<FlatDogResult>>();
         try

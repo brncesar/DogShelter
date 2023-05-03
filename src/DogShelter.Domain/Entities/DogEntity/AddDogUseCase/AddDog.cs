@@ -47,7 +47,7 @@ public class AddDog
 
     private async Task<bool> ThereIsAlreadyAnotherDogRegisteredWithTheSameName(string name)
     {
-        var domainResultGetDogByName = await _dogRepository.GetDogByName(name);
+        var domainResultGetDogByName = await _dogRepository.GetDogByNameAsync(name);
 
         return domainResultGetDogByName.IsSuccess() && domainResultGetDogByName.Value is not null;
     }

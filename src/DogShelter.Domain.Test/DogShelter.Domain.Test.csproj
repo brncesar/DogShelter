@@ -25,10 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\DogShelter.Domain\DogShelter.Domain.csproj" />
     <ProjectReference Include="..\DogShelter.Infrastructure.FakeInMemory\DogShelter.Infrastructure.FakeInMemory.csproj" />
   </ItemGroup>

@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Entities\DogEntity\GetDogsByBreedUseCase\GetDogsbyBreed.Errors.cs~RF45d36428.TMP" />
     <None Remove="Misc\Error.cs~RF2d84002b.TMP" />
   </ItemGroup>
 

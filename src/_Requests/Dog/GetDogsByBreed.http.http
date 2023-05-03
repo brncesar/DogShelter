@@ -1,0 +1,25 @@
+@hostname = localhost
+@port = 7111
+@host = https://{{hostname}}:{{port}}
+@contentType = application/json
+
+
+### GetDogsbyBreed #####################################################################################################
+
+### Bloodhound --------------------------------------------------------------------------------------------------------
+GET {{host}}/api/Dog/GetDogsbyBreed?BreedId=45
+Content-Type:{{contentType}}
+
+### Labrador Retriever ------------------------------------------------------------------------------------------------
+GET {{host}}/api/Dog/GetDogsbyBreed?BreedId=149
+Content-Type:{{contentType}}
+
+### Saint Bernard -----------------------------------------------------------------------------------------------------
+GET {{host}}/api/Dog/GetDogsbyBreed?BreedId=212
+Content-Type:{{contentType}}
+
+### Error parameter (size 'e') ----------------------------------------------------------------------------------------
+GET {{host}}/api/Dog/GetDogsbyBreed?BreedId=e
+
+### Error missing parameter -------------------------------------------------------------------------------------------
+GET {{host}}/api/Dog/GetDogsbyBreed

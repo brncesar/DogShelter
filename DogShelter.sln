@@ -26,6 +26,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dog", "Dog", "{FC5FD521-F27
 		src\_Requests\Dog\FindAvailableDogsBySize.http = src\_Requests\Dog\FindAvailableDogsBySize.http
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{B90E6D37-DE08-4B9F-8171-8B9DB6912779}"
+	ProjectSection(SolutionItems) = preProject
+		src\_Docs\Api.md = src\_Docs\Api.md
+		src\_Docs\DomainModels.md = src\_Docs\DomainModels.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

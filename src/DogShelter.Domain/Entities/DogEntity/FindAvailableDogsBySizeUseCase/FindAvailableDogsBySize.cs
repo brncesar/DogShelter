@@ -22,7 +22,7 @@ public class FindAvailableDogsBySize
         if (paramsValidationResult.HasErrors())
             return findAvailableDogsBySizeResult;
 
-        var findAvailableDogsBySizeRespositoryResult = findAvailableDogsBySizeParams.Size switch
+        var findAvailableDogsBySizeRespositoryResult = char.ToLower(findAvailableDogsBySizeParams.Size) switch
         {
             's' => await _dogRepository.GetDogsByHeightLowerThen (SMALL_MAX_SIZE_IN_CENTIMETERS),
             'l' => await _dogRepository.GetDogsByHeightHigherThen(LARGE_MIN_SIZE_IN_CENTIMETERS),

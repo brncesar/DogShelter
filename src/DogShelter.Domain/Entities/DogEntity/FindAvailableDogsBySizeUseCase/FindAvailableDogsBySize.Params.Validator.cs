@@ -7,7 +7,7 @@ internal class FindAvailableDogsBySizeParamsValidator : AbstractValidator<FindAv
     public FindAvailableDogsBySizeParamsValidator()
     {
         RuleFor(p => p.Size)
-            .Must(size => size is 's' or 'm' or 'l')
+            .Must(size => char.ToLower(size) is 's' or 'm' or 'l')
             .WithMessage(z => "To search, the size must be informed as 's', 'm', or 'l'");
     }
 }

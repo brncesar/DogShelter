@@ -22,7 +22,7 @@ public class FindAvailableDogsBySizeUseCaseTest
     [Fact]
     public async Task ShouldOnlyReturnMediumBreedDogs()
     {
-        var useCaseSpecificParamObj = _useCaseCommonParamObj with { Size = 'm' };
+        var useCaseSpecificParamObj = _useCaseCommonParamObj with { Size = 'M' };
         Assert.True(await AreAllFoundDogsConsistentWithTheSizeDefinedInTheFilter(useCaseSpecificParamObj));
     }
 
@@ -42,7 +42,7 @@ public class FindAvailableDogsBySizeUseCaseTest
         const int smallMaxSize = FindAvailableDogsBySize.SMALL_MAX_SIZE_IN_CENTIMETERS;
         const int largeMinSize = FindAvailableDogsBySize.LARGE_MIN_SIZE_IN_CENTIMETERS;
 
-        var areAllDogsConsistentSized = useCaseParamsObj.Size switch
+        var areAllDogsConsistentSized = char.ToLower(useCaseParamsObj.Size) switch
         {
             's' => foundedDogs?.All(dog => dog.HeightAverageMetric <= smallMaxSize) ?? true,
             'l' => foundedDogs?.All(dog => dog.HeightAverageMetric >= largeMinSize) ?? true,

@@ -14,11 +14,15 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqliteDb", "SqliteDb", "{3A9BE263-A536-48D7-BB40-E44DA9339C16}"
 	ProjectSection(SolutionItems) = preProject
 		src\_SqliteDb\dog-shelter.db = src\_SqliteDb\dog-shelter.db
+		src\_SqliteDb\_SQLiteAndSQLServerCompactToolbox-VSExtension.txt = src\_SqliteDb\_SQLiteAndSQLServerCompactToolbox-VSExtension.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DogShelter.Api", "src\DogShelter.Api\DogShelter.Api.csproj", "{CA855D37-D05D-40E0-A30F-2EC79415317F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Requests", "Requests", "{214A733F-D7DD-4081-A88B-577C9CDFB8EF}"
+	ProjectSection(SolutionItems) = preProject
+		src\_Requests\_RestClient-VSExtension.txt = src\_Requests\_RestClient-VSExtension.txt
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dog", "Dog", "{FC5FD521-F27B-4D5D-BB89-1C94321DE5B2}"
 	ProjectSection(SolutionItems) = preProject
@@ -30,6 +34,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{B90E6D37-D
 	ProjectSection(SolutionItems) = preProject
 		src\_Docs\Api.md = src\_Docs\Api.md
 		src\_Docs\DomainModels.md = src\_Docs\DomainModels.md
+		src\_Docs\_MarkdownEditor-VSExtension.txt = src\_Docs\_MarkdownEditor-VSExtension.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UseCaseClassesGenerator", "UseCaseClassesGenerator", "{686FDE5E-9923-49CB-AC25-14353E06351B}"
+	ProjectSection(SolutionItems) = preProject
+		src\_Docs\UseCaseClassesGenerator\Generator.html = src\_Docs\UseCaseClassesGenerator\Generator.html
 	EndProjectSection
 EndProject
 Global
@@ -64,6 +74,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FC5FD521-F27B-4D5D-BB89-1C94321DE5B2} = {214A733F-D7DD-4081-A88B-577C9CDFB8EF}
+		{686FDE5E-9923-49CB-AC25-14353E06351B} = {B90E6D37-DE08-4B9F-8171-8B9DB6912779}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {88989ED5-22D5-4F42-B9AB-5E7E60C88E22}

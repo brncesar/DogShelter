@@ -28,8 +28,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dog", "Dog", "{FC5FD521-F27
 	ProjectSection(SolutionItems) = preProject
 		src\_Requests\Dog\AddDog.http = src\_Requests\Dog\AddDog.http
 		src\_Requests\Dog\FindAvailableDogsBySize.http = src\_Requests\Dog\FindAvailableDogsBySize.http
-		src\_Requests\Dog\GetDogsByBreed.http.http = src\_Requests\Dog\GetDogsByBreed.http.http
 		src\_Requests\Dog\GetDogsByTemperament.http = src\_Requests\Dog\GetDogsByTemperament.http
+		src\_Requests\Dog\GetDogsByBreed.http = src\_Requests\Dog\GetDogsByBreed.http
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{B90E6D37-DE08-4B9F-8171-8B9DB6912779}"

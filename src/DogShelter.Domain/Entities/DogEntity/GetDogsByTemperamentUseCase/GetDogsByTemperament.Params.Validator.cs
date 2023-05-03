@@ -7,7 +7,7 @@ internal class GetDogsByTemperamentParamsValidator : AbstractValidator<GetDogsBy
     public GetDogsByTemperamentParamsValidator()
     {
         RuleFor(p => p.Temperament)
-            .Must(name => name.Trim().Length >= 3 && name.Trim().Length <= 50)
+            .Must(temperament => temperament.Trim().Length >= 3 && temperament.Trim().Length <= 50)
             .WithMessage(p => GetDogsByTemperamentErrors.TemperamentLengthWithoutRange().Description);
     }
 }

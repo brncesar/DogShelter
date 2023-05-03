@@ -21,7 +21,7 @@ public class DogController : BaseController<DogController>
     }
 
     [HttpGet("FindAvailableDogsBySize")]
-    public async Task<ActionResult> FindAvailableDogsBySize(FindAvailableDogsBySizeParams findAvailableDogsBySizeParams)
+    public async Task<ActionResult> FindAvailableDogsBySize([FromQuery] FindAvailableDogsBySizeParams findAvailableDogsBySizeParams)
     {
         var domainResult = await _findAvailableDogsBySizeUseCase.Execute(findAvailableDogsBySizeParams);
 

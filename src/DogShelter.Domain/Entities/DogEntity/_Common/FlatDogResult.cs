@@ -9,4 +9,4 @@ public record FlatDogResult(
     string LifeSpan,
     string Temperament,
     int HeightAverageMetric,
-    int HeightAverageImperial);
+    decimal HeightAverageImperial);

@@ -7,9 +7,7 @@ namespace DogShelter.Domain;
 public static class DependencyInjection
 {
     public static IServiceCollection AddDomain(this IServiceCollection services)
-    {
-        return services
+        => services
             .AddScoped<AddDog>()
             .AddScoped<FindAvailableDogsBySize>();
-    }
 }

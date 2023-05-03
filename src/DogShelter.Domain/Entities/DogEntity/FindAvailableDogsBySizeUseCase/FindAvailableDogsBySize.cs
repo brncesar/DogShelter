@@ -6,6 +6,9 @@ namespace DogShelter.Domain.Entities.DogEntity.FindAvailableDogsBySizeUseCase;
 
 public class FindAvailableDogsBySize
 {
+    public const int SMALL_MAX_SIZE_IN_CENTIMETERS = 35;
+    public const int LARGE_MIN_SIZE_IN_CENTIMETERS = 55;
+
     private readonly IDogRepository _dogRepository;
 
     public FindAvailableDogsBySize(IDogRepository dogRepository)
@@ -19,13 +22,11 @@ public class FindAvailableDogsBySize
         if (paramsValidationResult.HasErrors())
             return findAvailableDogsBySizeResult;
 
-        var sizeLimits = GetMeasurementsAccordingToTheUnitOfMeasurement(findAvailableDogsBySizeParams);
-
         var findAvailableDogsBySizeRespositoryResult = findAvailableDogsBySizeParams.Size switch
         {
-            's' => await _dogRepository.GetDogsByHeightLowerThen (findAvailableDogsBySizeParams.IsMeasurementSystemMetric, sizeLimits.smallMaxSize),
-            'l' => await _dogRepository.GetDogsByHeightHigherThen(findAvailableDogsBySizeParams.IsMeasurementSystemMetric, sizeLimits.largeMinSize),
-            'm' => await _dogRepository.GetDogsByHeightBetween   (findAvailableDogsBySizeParams.IsMeasurementSystemMetric, sizeLimits.smallMaxSize, sizeLimits.largeMinSize),
+            's' => await _dogRepository.GetDogsByHeightLowerThen (SMALL_MAX_SIZE_IN_CENTIMETERS),
+            'l' => await _dogRepository.GetDogsByHeightHigherThen(LARGE_MIN_SIZE_IN_CENTIMETERS),
+            'm' => await _dogRepository.GetDogsByHeightBetween   (SMALL_MAX_SIZE_IN_CENTIMETERS, LARGE_MIN_SIZE_IN_CENTIMETERS),
         };
 
         if (findAvailableDogsBySizeRespositoryResult.HasErrors())
@@ -34,24 +35,5 @@ public class FindAvailableDogsBySize
         return findAvailableDogsBySizeRespositoryResult.Value is not null
             ? findAvailableDogsBySizeResult.SetValue(findAvailableDogsBySizeRespositoryResult.Value)
             : findAvailableDogsBySizeResult;
-    }
-
-    public static (int smallMaxSize, int largeMinSize) GetMeasurementsAccordingToTheUnitOfMeasurement(FindAvailableDogsBySizeParams findAvailableDogsBySizeParams)
-    {
-        const int smallMaxSizeCm = 35;
-        const int largeMinSizeCm = 55;
-
-        int smallMaxSizeIn = (int)Math.Round(smallMaxSizeCm * 0.393701, 0);
-        int largeMinSizeIn = (int)Math.Round(largeMinSizeCm * 0.393701, 0);
-
-        int smallMaxSize = findAvailableDogsBySizeParams.IsMeasurementSystemMetric
-            ? smallMaxSizeCm
-            : smallMaxSizeIn;
-
-        int largeMinSize = findAvailableDogsBySizeParams.IsMeasurementSystemMetric
-            ? largeMinSizeCm
-            : largeMinSizeIn;
-
-        return (smallMaxSize, largeMinSize);
     }
 }

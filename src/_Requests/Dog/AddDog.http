@@ -1,116 +1,124 @@
 @hostname = localhost
-@port = 7257
+@port = 7111
 @host = https://{{hostname}}:{{port}}
 @contentType = application/json
 
 
-### 👇 YOUR NEW USE CASE - REGULAR USE TEST SCENARIO  👇 ##############################################################
 ### AddDog #############################################################################################################
 
-### Regular use --------------------------------------------------------------------------------------------------------
+### Regular use (WaltDisney Pluto) -------------------------------------------------------------------------------------
 POST {{host}}/api/Dog/AddDog
 Content-Type:{{contentType}}
 
 {
-	name: "some valid domain value",
-	breedId: 100
+	"name": "Pluto",
+	"breedId": 45
+}
+
+### Regular use (Marley and me) -----------------------------------------------------------------------------------------
+POST {{host}}/api/Dog/AddDog
+Content-Type:{{contentType}}
+
+{
+	"name": "Marley",
+	"breedId": 149
+}
+
+### Regular use (Beethoven movie) --------------------------------------------------------------------------------------
+POST {{host}}/api/Dog/AddDog
+Content-Type:{{contentType}}
+
+{
+	"name": "Beethoven",
+	"breedId": 212
+}
+
+### Regular use (The Mask's dog) --------------------------------------------------------------------------------------
+POST {{host}}/api/Dog/AddDog
+Content-Type:{{contentType}}
+
+{
+	"name": "Milo",
+	"breedId": 139
 }
 
 
-
-### 👇 FIND EXEMPLE - ALL TESTS SCENARIOS 👇 ##########################################################################
-### (GET) FIND #########################################################################################################
-
-### Empty result -------------------------------------------------------------------------------------------------------
-GET {{host}}/api/Dog/Find?nome=feira+inexistente&regiao5=leste
-Content-Type: {{contentType}}
-
-### One result ---------------------------------------------------------------------------------------------------------
-GET {{host}}/api/Dog/Find?nome=AGUA+BRANCA
-Content-Type: {{contentType}}
-
-### Many results -------------------------------------------------------------------------------------------------------
-GET {{host}}/api/Dog/Find?nome=VILA&codDistrito=04
-Content-Type: {{contentType}}
-
-### Error parameter ----------------------------------------------------------------------------------------------------
-GET {{host}}/api/Dog/Find?nome=nome+muito+muuuito+muito+grande&regiao5=sudoeste
-
-
-
-
-### 👇 ADD  EXEMPLE - ALL TESTS SCENARIOS 👇 ##########################################################################
-### (POST) ADD New Dog #################################################################################################
-
-### New Dog ------------------------------------------------------------------------------------------------------------
-POST {{host}}/api/Dog/Add
-Content-Type: {{contentType}}
+### Regular use (Scooby Doo) ------------------------------------------------------------------------------------------
+POST {{host}}/api/Dog/AddDog
+Content-Type:{{contentType}}
 
 {
-	"nome"                 : "Nova Feira Teste",
-	"numeroRegistro"       : "9999-1",
-	"setorCensitarioIBGE"  : "355030801000054",
-	"areaDePonderacaoIBGE" : "3550308005039",
-	"codDistrito"          : "01",
-	"codSubPrefeitura"     : "25",
-	"regiao5"              : "LESTE",
-	"regiao8"              : "leste1",
-	"enderecoLogradouro"   : "Avenida Clark Kent",
-	"enderecoNumero"       : "5",
-	"enderecoBairro"       : "MetrÃ³polis",
-	"enderecoReferencia"   : "Ao lado do Clarim DiÃ¡rio",
-	"latitude"             : -23.564711,
-	"longitude"            : -46.564711
+	"name": "Scooby Doo",
+	"breedId": 124
 }
 
-### Find new Dog added -------------------------------------------------------------------------------------------------
-GET {{host}}/api/Dog/Find?nome=Nova+Feira+Teste
-Content-Type: {{contentType}}
-
-### Edit new Dog added -------------------------------------------------------------------------------------------------
-PUT {{host}}/api/Dog/Edit
-Content-Type: {{contentType}}
+### Regular use (Lessie movies) ---------------------------------------------------------------------------------------
+POST {{host}}/api/Dog/AddDog
+Content-Type:{{contentType}}
 
 {
-	"nome"                 : "Feira dos Kent",
-	"numeroRegistro"       : "9999-1",
-	"regiao5"              : "oeste",
-	"regiao8"              : "oeste"
+	"name": "Lessie",
+	"breedId": 221
 }
 
-### Find agin new Dog added (and edited) -------------------------------------------------------------------------------
-GET {{host}}/api/Dog/Find?nome=Feira+dos+Kent
 
-### Remove new Dog edited ----------------------------------------------------------------------------------------------
-DELETE {{host}}/api/Dog/Remove/9999-1
-
-### Error parameter ----------------------------------------------------------------------------------------------------
-POST {{host}}/api/Dog/Add
-Content-Type: {{contentType}}
+### Regular use (BTTF movie) ------------------------------------------------------------------------------------------
+POST {{host}}/api/Dog/AddDog
+Content-Type:{{contentType}}
 
 {
-	"nome"                 : "Nova Feira Teste",
-	"numeroRegistro"       : "9999-1",
-	"setorCensitarioIBGE"  : "355030801000054",
-	"areaDePonderacaoIBGE" : "3550308005039",
-	"codDistrito"          : "01",
-	"codSubPrefeitura"     : "25",
-	"regiao5"              : "Sudoeste",
-	"regiao8"              : "Noroeste",
-	"enderecoLogradouro"   : "Avenida Clark Kent",
-	"enderecoNumero"       : "123456",
-	"enderecoBairro"       : "MetrÃ³polis",
-	"enderecoReferencia"   : "Ao lado do Clarim DiÃ¡rio",
-	"latitude"             : -23564711,
-	"longitude"            : -46.564711
+	"name": "Einstein",
+	"breedId": 178
 }
 
-### Error: Try edit without numeroRegistro -----------------------------------------------------------------------------
-PUT {{host}}/api/Dog/Edit
+### ERROR: Inexistent breed id ----------------------------------------------------------------------------------------
+POST {{host}}/api/Dog/AddDog
+Content-Type:{{contentType}}
+
+{
+	"name": "Pluto",
+	"breedId": 2000
+}
+
+### ERROR: Duplicated dog ---------------------------------------------------------------------------------------------
+POST {{host}}/api/Dog/AddDog
+Content-Type:{{contentType}}
+
+{
+	"name": "Pluto",
+	"breedId": 132
+}
+
+### Error parameter: Very large name -----------------------------------------------------------------------------------
+POST {{host}}/api/Dog/AddDog
 Content-Type: {{contentType}}
 
 {
-	"nome"    : "Feira dos Kent",
-	"regiao5" : "oeste",
-	"regiao8" : "oeste"
+	"name": "An absurdly long name just to provoke a string size validation error",
+	"breedId": 132
+}
+
+### Error parameter: Very short name -----------------------------------------------------------------------------------
+POST {{host}}/api/Dog/AddDog
+Content-Type: {{contentType}}
+
+{
+	"name": "Al",
+	"breedId": 132
+}
+
+### ERROR: Missing parameter ------------------------------------------------------------------------------------------
+POST {{host}}/api/Dog/AddDog
+Content-Type: {{contentType}}
+
+{
+	"name": "Pluto"
+}
+
+### ERROR: Missing parameter ------------------------------------------------------------------------------------------
+POST {{host}}/api/Dog/AddDog
+Content-Type: {{contentType}}
+
+{
+	"breedId": 132
 }

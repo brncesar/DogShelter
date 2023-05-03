@@ -1,6 +1,7 @@
 using DogShelter.Api.Misc;
 using DogShelter.Domain;
 using DogShelter.Infrastructure;
+using DogShelter.Infrastructure.ApiClient.TheDogApi;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -10,9 +10,9 @@ public interface IDogRepository
 
     Task<IDomainActionResult<FlatDogResult>> AddDogAsync(AddDogParams addDogParams);
 
-    Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightLowerThen(bool isMeasurementSystemMetric, int maximumHeight);
+    Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightLowerThen(int maximumHeight);
 
-    Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightHigherThen(bool isMeasurementSystemMetric, int minimumHeight);
+    Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightHigherThen(int minimumHeight);
 
-    Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightBetween(bool isMeasurementSystemMetric, int minimumHeight, int maximumHeight);
+    Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightBetween(int minimumHeight, int maximumHeight);
 }

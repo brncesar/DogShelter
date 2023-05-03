@@ -3,13 +3,16 @@ using DogShelter.Domain.Entities.BreedEntity;
 using DogShelter.Domain.Misc;
 using DogShelter.Infrastructure.Data.DbCtx;
 using Microsoft.EntityFrameworkCore;
-using System.Text.RegularExpressions;
+using DogShelter.Infrastructure.ApiClient.TheDogApi;
+using System.Globalization;
 
 namespace DogShelter.Infrastructure.Data.Repository;
 
 public class BreedRepository : BaseRepository<DogShelterDbContext, Breed>, IBreedRepository
 {
-    public BreedRepository(DogShelterDbContext dbCtx) : base(dbCtx) { }
+    private readonly ITheDogApiClient _dogApiClient;
+    public BreedRepository(DogShelterDbContext dbCtx, ITheDogApiClient theDogApiClient) : base(dbCtx)
+        => _dogApiClient = theDogApiClient;
 
     public async Task<IDomainActionResult<Breed>> GetByExternalId(int id)
     {
@@ -19,22 +22,20 @@ public class BreedRepository : BaseRepository<DogShelterDbContext, Breed>, IBree
             var internalSavedBreed = await _dbSet.FirstOrDefaultAsync(d => d.ApiId == id);
 
             if (internalSavedBreed is null) { // Must get breed from API
-                // Get breed from API
-                var breedFoundedOnDogApi = true;
 
-                if (breedFoundedOnDogApi) {
-                    var heightRangeMetric   = "23 - 50";
-                    var heightRangeImperial = "12 - 31";
+                var breedLoadedFromApi = await _dogApiClient.GetBreedById(id);
+
+                if (breedLoadedFromApi is not null) {
 
                     var newBreed = new Breed {
-                        ApiId                 = 0,
-                        Name                  = "",
-                        BredFor               = "",
-                        BreedGroup            = "",
-                        LifeSpan              = "",
-                        Temperament           = "",
-                        HeightAverageMetric   = GetAverageValueFromRange(heightRangeMetric  ),
-                        HeightAverageImperial = GetAverageValueFromRange(heightRangeImperial),
+                        ApiId                 = id,
+                        Name                  = breedLoadedFromApi.name,
+                        BredFor               = breedLoadedFromApi.bred_for,
+                        LifeSpan              = breedLoadedFromApi.life_span,
+                        BreedGroup            = breedLoadedFromApi.breed_group,
+                        Temperament           = breedLoadedFromApi.temperament,
+                        HeightAverageMetric   = GetMetricAverageValueFromRange  (breedLoadedFromApi.height.metric  ),
+                        HeightAverageImperial = GetImperialAverageValueFromRange(breedLoadedFromApi.height.imperial),
                     };
 
                     await base.AddAsync(newBreed);
@@ -55,18 +56,29 @@ public class BreedRepository : BaseRepository<DogShelterDbContext, Breed>, IBree
         }
     }
 
-    private static int GetAverageValueFromRange(string range)
+    private static int GetMetricAverageValueFromRange(string range)
     {
         if (range is null) return 0;
+        var rangeNumbers = range.Trim().Split(" - ");
 
-        var pattern = @"^\d+\s-\s\d+$";
+        if (rangeNumbers.Length == 1) return int.Parse(rangeNumbers[0]);
 
-        if (!Regex.IsMatch(range, pattern)) return 0;
-
-        var rangeNumbers = range.Split(" - ");
         var from = int.Parse(rangeNumbers[0]);
-        var to = int.Parse(rangeNumbers[1]);
+        var to   = int.Parse(rangeNumbers[1]);
 
         return Convert.ToInt32((from + to) / 2);
+    }
+
+    private static decimal GetImperialAverageValueFromRange(string range)
+    {
+        if (range is null) return 0;
+        var rangeNumbers = range.Trim().Split(" - ");
+
+        if (rangeNumbers.Length == 1) return decimal.Parse(rangeNumbers[0]);
+
+        var from = decimal.Parse(rangeNumbers[0], CultureInfo.InvariantCulture);
+        var to   = decimal.Parse(rangeNumbers[1], CultureInfo.InvariantCulture);
+
+        return (from + to) / 2;
     }
 }

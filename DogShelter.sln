@@ -23,6 +23,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dog", "Dog", "{FC5FD521-F27B-4D5D-BB89-1C94321DE5B2}"
 	ProjectSection(SolutionItems) = preProject
 		src\_Requests\Dog\AddDog.http = src\_Requests\Dog\AddDog.http
+		src\_Requests\Dog\FindAvailableDogsBySize.http = src\_Requests\Dog\FindAvailableDogsBySize.http
 	EndProjectSection
 EndProject
 Global

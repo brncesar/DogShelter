@@ -4,6 +4,7 @@ using DogShelter.Domain.Entities.DogEntity;
 using DogShelter.Domain.Entities.DogEntity.AddDogUseCase;
 using DogShelter.Domain.Entities.DogEntity.Common;
 using DogShelter.Domain.Misc;
+using System.Linq.Expressions;
 
 namespace DogShelter.Infrastructure.FakeInMemory.Data;
 
@@ -121,16 +122,16 @@ public class DogRepositoryMemory : IDogRepository
             : domainRepositoryResult.AddNotFoundError("", "");
     }
 
-    public async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightBetween(bool isMeasurementSystemMetric, int minimumHeight, int maximumHeight)
-        => await GetDogsByHeight(isMeasurementSystemMetric: isMeasurementSystemMetric, min: minimumHeight, max: maximumHeight);
+    public async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightBetween(int minimumHeight, int maximumHeight)
+        => await GetDogsByHeight(min: minimumHeight, max: maximumHeight);
 
-    public async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightHigherThen(bool isMeasurementSystemMetric, int minimumHeight)
-        => await GetDogsByHeight(isMeasurementSystemMetric: isMeasurementSystemMetric, min: minimumHeight);
+    public async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightHigherThen(int minimumHeight)
+        => await GetDogsByHeight(min: minimumHeight);
 
-    public async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightLowerThen(bool isMeasurementSystemMetric, int maximumHeight)
-        => await GetDogsByHeight(isMeasurementSystemMetric: isMeasurementSystemMetric, max: maximumHeight);
+    public async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeightLowerThen(int maximumHeight)
+        => await GetDogsByHeight(max: maximumHeight);
 
-    private async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeight(bool isMeasurementSystemMetric = true, int? min = null, int? max = null)
+    private async Task<IDomainActionResult<List<FlatDogResult>>> GetDogsByHeight(int? min = null, int? max = null)
     {
         var domainRepositoryResult = new DomainActionResult<List<FlatDogResult>>();
 
@@ -138,17 +139,11 @@ public class DogRepositoryMemory : IDogRepository
 
         Func<Dog, bool> filter = heightLimits switch
         {
-            { Min: int _min, Max: int _max } => isMeasurementSystemMetric
-                ? d => d.Breed.HeightAverageMetric   >= min && d.Breed.HeightAverageMetric   <= max
-                : d => d.Breed.HeightAverageImperial >= min && d.Breed.HeightAverageImperial <= max,
+            { Min: int _min, Max: int _max } => d => d.Breed.HeightAverageMetric >= min && d.Breed.HeightAverageMetric <= max,
 
-            { Min: int _min, Max: null    } => isMeasurementSystemMetric
-                ? d => d.Breed.HeightAverageMetric   >= min
-                : d => d.Breed.HeightAverageImperial >= min,
+            { Min: int _min, Max: null     } => d => d.Breed.HeightAverageMetric >= min,
 
-            { Min: null, Max: int _max    } => isMeasurementSystemMetric
-                ? d => d.Breed.HeightAverageMetric   <= max
-                : d => d.Breed.HeightAverageImperial <= max,
+            { Min: null    , Max: int _max } => d => d.Breed.HeightAverageMetric <= max,
 
             _ => throw new ArgumentException()
         };

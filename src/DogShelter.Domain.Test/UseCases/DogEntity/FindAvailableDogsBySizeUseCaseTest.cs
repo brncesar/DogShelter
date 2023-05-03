@@ -7,7 +7,6 @@ public class FindAvailableDogsBySizeUseCaseTest
 {
     private readonly FindAvailableDogsBySize _useCaseTestTarget;
     private readonly FindAvailableDogsBySizeParams _useCaseCommonParamObj = new (
-        IsMeasurementSystemMetric: true,
         Size: 'm');
 
     public FindAvailableDogsBySizeUseCaseTest(FindAvailableDogsBySize findAvailableDogsBySizeUseCase)
@@ -40,13 +39,14 @@ public class FindAvailableDogsBySizeUseCaseTest
 
         var foundedDogs = FindAvailableDogsBySizeParamsResult.Value;
 
-        var sizeLimits = FindAvailableDogsBySize.GetMeasurementsAccordingToTheUnitOfMeasurement(useCaseParamsObj);
+        const int smallMaxSize = FindAvailableDogsBySize.SMALL_MAX_SIZE_IN_CENTIMETERS;
+        const int largeMinSize = FindAvailableDogsBySize.LARGE_MIN_SIZE_IN_CENTIMETERS;
 
         var areAllDogsConsistentSized = useCaseParamsObj.Size switch
         {
-            's' => foundedDogs?.All(dog => dog.HeightAverageMetric <= sizeLimits.smallMaxSize) ?? true,
-            'l' => foundedDogs?.All(dog => dog.HeightAverageMetric >= sizeLimits.largeMinSize) ?? true,
-            'm' => foundedDogs?.All(dog => dog.HeightAverageMetric >= sizeLimits.smallMaxSize && dog.HeightAverageMetric <= sizeLimits.largeMinSize) ?? true,
+            's' => foundedDogs?.All(dog => dog.HeightAverageMetric <= smallMaxSize) ?? true,
+            'l' => foundedDogs?.All(dog => dog.HeightAverageMetric >= largeMinSize) ?? true,
+            'm' => foundedDogs?.All(dog => dog.HeightAverageMetric >= smallMaxSize && dog.HeightAverageMetric <= largeMinSize) ?? true,
         };
 
         return FindAvailableDogsBySizeParamsResult.IsSuccess() && areAllDogsConsistentSized;

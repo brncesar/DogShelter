@@ -35,17 +35,11 @@ public class AddDogUseCaseTest
     [Fact]
     public async Task MustReturnErrorWhenTryingToAddADogThatAlreadyHaveTheSameName()
     {
-        var dogName = _useCaseCommonParamObj.Name + DateTime.Now.ToString("MM/dd/yyyy HH:mm");
-        var useCaseParamObj = _useCaseCommonParamObj with
-        {
-            Name = dogName
-        };
-
-        var addNewDogResult = await _useCaseTestTarget.Execute(useCaseParamObj);
+        var addNewDogResult = await _useCaseTestTarget.Execute(_useCaseCommonParamObj);
 
         Assert.True(addNewDogResult.IsSuccess());
 
-        var anotherNewDogWithTheSameName = await _useCaseTestTarget.Execute(useCaseParamObj);
+        var anotherNewDogWithTheSameName = await _useCaseTestTarget.Execute(_useCaseCommonParamObj);
 
         var hasDuplicateDogError = anotherNewDogWithTheSameName.Errors.Any(err => err.Description == AddDogErrors.DuplicateDog().Description);
 

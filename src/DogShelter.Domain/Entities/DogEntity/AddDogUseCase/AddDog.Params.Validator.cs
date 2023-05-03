@@ -7,7 +7,7 @@ internal class AddDogParamsValidator : AbstractValidator<AddDogParams>
     public AddDogParamsValidator()
     {
         RuleFor(p => p.Name)
-            .Must(n => n.Trim().Length is >= 3 and <= 50)
+            .Must(name => name.Trim().Length >= 3 && name.Trim().Length <= 50)
             .WithMessage(p => DogCommonErrors.PropsErrors.NameLengthWithoutRange().Description);
 
         RuleFor(p => p.BreedId)

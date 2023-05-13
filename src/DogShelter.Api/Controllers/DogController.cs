@@ -8,49 +8,33 @@ namespace DogShelter.Api.Controllers;
 
 public class DogController : BaseController<DogController>
 {
-    private readonly AddDog _addDogUseCase;
-    private readonly GetDogsByBreed _getDogsByBreedUseCase;
-    private readonly GetDogsByTemperament _getDogsByTemperamentUseCase;
-    private readonly FindAvailableDogsBySize _findAvailableDogsBySizeUseCase;
+    private readonly IAddDog _addDogUseCase;
+    private readonly IGetDogsByBreed _getDogsByBreedUseCase;
+    private readonly IGetDogsByTemperament _getDogsByTemperamentUseCase;
+    private readonly IFindAvailableDogsBySize _findAvailableDogsBySizeUseCase;
 
     public DogController(ILogger<DogController> logger,
-        AddDog addDogUseCase,
-        FindAvailableDogsBySize findAvailableDogsBySizeUseCase,
-        GetDogsByBreed getDogsByBreedUseCase,
-        GetDogsByTemperament getDogsByTemperamentUseCase
+        IAddDog addDogUseCase,
+        IFindAvailableDogsBySize findAvailableDogsBySizeUseCase,
+        IGetDogsByBreed getDogsByBreedUseCase,
+        IGetDogsByTemperament getDogsByTemperamentUseCase
     ) : base(logger)
         => (_addDogUseCase, _findAvailableDogsBySizeUseCase, _getDogsByBreedUseCase, _getDogsByTemperamentUseCase) =
-           (addDogUseCase , findAvailableDogsBySizeUseCase , getDogsByBreedUseCase , getDogsByTemperamentUseCase );
+           ( addDogUseCase,  findAvailableDogsBySizeUseCase,  getDogsByBreedUseCase,  getDogsByTemperamentUseCase);
 
     [HttpPost("AddDog")]
     public async Task<ActionResult> AddDog(AddDogParams addDogParams)
-    {
-        var domainResult = await _addDogUseCase.Execute(addDogParams);
-
-        return DomainResult(domainResult);
-    }
+        => DomainResult(await _addDogUseCase.Execute(addDogParams));
 
     [HttpGet("FindAvailableDogsBySize")]
     public async Task<ActionResult> FindAvailableDogsBySize([FromQuery] FindAvailableDogsBySizeParams findAvailableDogsBySizeParams)
-    {
-        var domainResult = await _findAvailableDogsBySizeUseCase.Execute(findAvailableDogsBySizeParams);
-
-        return DomainResult(domainResult);
-    }
+        => DomainResult(await _findAvailableDogsBySizeUseCase.Execute(findAvailableDogsBySizeParams));
 
     [HttpGet("GetDogsByBreed")]
     public async Task<ActionResult> GetDogsByBreed([FromQuery] GetDogsByBreedParams getDogsByBreedParams)
-    {
-        var domainResult = await _getDogsByBreedUseCase.Execute(getDogsByBreedParams);
-
-        return DomainResult(domainResult);
-    }
+        => DomainResult(await _getDogsByBreedUseCase.Execute(getDogsByBreedParams));
 
     [HttpGet("GetDogsByTemperament")]
     public async Task<ActionResult> GetDogsByTemperament([FromQuery] GetDogsByTemperamentParams getDogsByTemperamentParams)
-    {
-        var domainResult = await _getDogsByTemperamentUseCase.Execute(getDogsByTemperamentParams);
-
-        return DomainResult(domainResult);
-    }
+        => DomainResult(await _getDogsByTemperamentUseCase.Execute(getDogsByTemperamentParams));
 }

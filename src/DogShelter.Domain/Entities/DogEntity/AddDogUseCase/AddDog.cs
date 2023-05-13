@@ -5,7 +5,7 @@ using DogShelter.Domain.Misc;
 
 namespace DogShelter.Domain.Entities.DogEntity.AddDogUseCase;
 
-public class AddDog
+public class AddDog : IAddDog
 {
     private readonly IDogRepository   _dogRepository;
     private readonly IBreedRepository _breedRepository;

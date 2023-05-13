@@ -1,10 +1,11 @@
 using DogShelter.Domain.Entities.Common;
+using DogShelter.Domain.Entities.DogEntity.AddDogUseCase;
 using DogShelter.Domain.Entities.DogEntity.Common;
 using DogShelter.Domain.Misc;
 
 namespace DogShelter.Domain.Entities.DogEntity.FindAvailableDogsBySizeUseCase;
 
-public class FindAvailableDogsBySize
+public class FindAvailableDogsBySize : IFindAvailableDogsBySize
 {
     public const int SMALL_MAX_SIZE_IN_CENTIMETERS = 35;
     public const int LARGE_MIN_SIZE_IN_CENTIMETERS = 55;

@@ -1,10 +1,11 @@
 ﻿using DogShelter.Domain.Entities.Common;
+using DogShelter.Domain.Entities.DogEntity.AddDogUseCase;
 using DogShelter.Domain.Entities.DogEntity.Common;
 using DogShelter.Domain.Misc;
 
 namespace DogShelter.Domain.Entities.DogEntity.GetDogsByTemperamentUseCase;
 
-public class GetDogsByTemperament
+public class GetDogsByTemperament : IGetDogsByTemperament
 {
     private readonly IDogRepository _dogRepository;
 

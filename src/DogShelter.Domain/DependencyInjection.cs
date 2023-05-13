@@ -10,8 +10,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddDomain(this IServiceCollection services)
         => services
-            .AddScoped<AddDog>()
-            .AddScoped<GetDogsByBreed>()
-            .AddScoped<GetDogsByTemperament>()
-            .AddScoped<FindAvailableDogsBySize>();
+            .AddScoped<IAddDog                 , AddDog                 >()
+            .AddScoped<IGetDogsByBreed         , GetDogsByBreed         >()
+            .AddScoped<IGetDogsByTemperament   , GetDogsByTemperament   >()
+            .AddScoped<IFindAvailableDogsBySize, FindAvailableDogsBySize>();
 }
